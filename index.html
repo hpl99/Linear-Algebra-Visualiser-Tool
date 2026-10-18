@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Linear Algebra Lab — Explore mathematics through space</title>
-  <meta name="description" content="A visual, simulation-first linear algebra laboratory. Manipulate vectors, deform coordinate grids with matrices, and develop intuitive geometric understanding from zero.">
+  <meta name="description" content="A visual, simulation-first linear algebra laboratory. Manipulate vectors, deform coordinate grids with matrices, and develop intuitive geometric understanding from first principles.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -59,22 +59,22 @@
       
       <div class="dock-separator"></div>
 
-      <button id="btnInspectMode" class="dock-btn icon-only" title="Toggle 3D Object Inspect Mode">
+      <button id="btnInspectMode" class="dock-btn icon-only" title="Toggle 3D Object Inspect Mode" aria-label="Toggle 3D object inspect mode">
         <span>🔍</span>
       </button>
-      <button id="btnShareLink" class="dock-btn icon-only" title="Share current experiment state (Copy link)">
+      <button id="btnShareLink" class="dock-btn icon-only" title="Share current experiment state (Copy link)" aria-label="Share current experiment state">
         <span>🔗</span>
       </button>
-      <button id="btnCaptureScreenshot" class="dock-btn icon-only" title="Capture high-resolution screenshot">
+      <button id="btnCaptureScreenshot" class="dock-btn icon-only" title="Capture high-resolution screenshot" aria-label="Capture screenshot">
         <span>📸</span>
       </button>
-      <button id="btnFocusMode" class="dock-btn icon-only" title="Focus Mode / Observatory Fullscreen (F)">
+      <button id="btnFocusMode" class="dock-btn icon-only" title="Focus Mode / Observatory Fullscreen (F)" aria-label="Toggle focus mode">
         <span>⚡</span>
       </button>
-      <button id="btnInfoModal" class="dock-btn icon-only" title="Mathematical Info & Code (I)">
+      <button id="btnInfoModal" class="dock-btn icon-only" title="Mathematical Info & Code (I)" aria-label="Open math info modal">
         <span>ⓘ</span>
       </button>
-      <button id="btnSettingsModal" class="dock-btn icon-only" title="Laboratory Settings">
+      <button id="btnSettingsModal" class="dock-btn icon-only" title="Laboratory Settings" aria-label="Open laboratory settings">
         <span>⚙</span>
       </button>
     </div>
@@ -240,6 +240,14 @@
         <span>3. Cosmic Drift</span>
         <span style="font-size:0.68rem; color:var(--text-muted);">Ethereal Shimmer</span>
       </div>
+      <div class="track-option" data-track="lofi-study">
+        <span>4. Lo-fi Study</span>
+        <span style="font-size:0.68rem; color:var(--text-muted);">Warm tape haze</span>
+      </div>
+      <div class="track-option" data-track="glass-chimes">
+        <span>5. Glass Chimes</span>
+        <span style="font-size:0.68rem; color:var(--text-muted);">Crystal shimmer</span>
+      </div>
     </div>
     <div class="audio-volume-row">
       <span style="font-size:0.8rem;">🔊</span>
@@ -247,6 +255,10 @@
         <input type="range" id="audioVolumeInput" min="0" max="1" step="0.05" value="0.3">
       </div>
       <span id="val_audioVolume" style="font-family:var(--font-mono); font-size:0.75rem; min-width:32px;">30%</span>
+    </div>
+    <div class="audio-actions" style="display:flex; gap:8px; margin-top:4px;">
+      <button id="btnUploadTrack" class="btn-action" style="flex:1;">Upload Track</button>
+      <input id="audioUploadInput" type="file" accept="audio/*" hidden>
     </div>
     <button id="btnToggleAudioPlayback" class="btn-action primary" style="margin-top:10px; width:100%;">
       Start Ambient Audio
@@ -373,6 +385,16 @@
         <button id="btnCloseSettings" class="panel-mini-btn" style="font-size:1.1rem;">✕</button>
       </div>
       <div class="settings-body">
+        <div class="setting-item">
+          <div class="setting-text">
+            <span class="setting-label">Light Theme</span>
+            <span class="setting-desc">Use a brighter interface for daytime or reduced contrast exploring</span>
+          </div>
+          <label class="switch">
+            <input type="checkbox" id="chkThemeMode">
+            <span class="switch-slider"></span>
+          </label>
+        </div>
         <div class="setting-item">
           <div class="setting-text">
             <span class="setting-label">Reduced Motion</span>
