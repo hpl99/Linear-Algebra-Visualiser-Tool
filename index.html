@@ -267,8 +267,101 @@
     </button>
   </div>
 
-  <!-- ... rest of document remains unchanged ... -->
+  <!-- TWO-GRID & VISUAL SETTINGS POPOVER -->
+  <div class="popover-menu" id="gridPopover">
+    <div class="popover-header"><span>Two-Grid &amp; Visual Settings</span></div>
+    <div class="seg-group" style="margin:4px 0 8px;">
+      <button class="seg-btn grid-mode-btn active" data-gridmode="both">Both</button>
+      <button class="seg-btn grid-mode-btn" data-gridmode="orig">Original</button>
+      <button class="seg-btn grid-mode-btn" data-gridmode="trans">Transformed</button>
+    </div>
+    <label class="check-row"><input type="checkbox" id="chkOriginalGrid" checked> Original grid &amp; axes</label>
+    <label class="check-row"><input type="checkbox" id="chkTransformedGrid" checked> Transformed grid</label>
+    <label class="check-row"><input type="checkbox" id="chkDropLines" checked> Drop lines</label>
+    <label class="check-row"><input type="checkbox" id="chkTraceMode"> Trace output tip</label>
+    <button id="btnTransformationFlow" class="btn-action" style="width:100%; margin-top:8px;">▶ Play / pause transformation flow (Space)</button>
+  </div>
 
-  <script src="app.js"></script>
+  <!-- INSPECT HUD -->
+  <div class="inspect-hud" id="inspectHud" style="display:none;">
+    <div class="inspect-head"><strong id="inspectTargetName">Object</strong><button id="inspectCloseBtn" class="panel-mini-btn" aria-label="Close inspector">✕</button></div>
+    <div id="inspectContent"></div>
+  </div>
+
+  <!-- COMMAND PALETTE -->
+  <div class="modal-backdrop" id="commandPaletteModal">
+    <div class="modal-card palette-card">
+      <input id="paletteSearchInput" class="palette-input" type="text" placeholder="Search experiments &amp; commands…" autocomplete="off" spellcheck="false">
+      <div id="paletteResults" class="palette-results"></div>
+    </div>
+  </div>
+
+  <!-- EXPERIMENT EXPLORER -->
+  <div class="modal-backdrop" id="explorerModal">
+    <div class="modal-card wide">
+      <div class="modal-head"><h2>Experiment Explorer</h2><button id="btnCloseExplorer" class="panel-mini-btn" aria-label="Close">✕</button></div>
+      <input id="explorerSearchInput" class="palette-input" type="text" placeholder="Filter experiments…" autocomplete="off">
+      <div id="explorerGrid" class="explorer-grid"></div>
+    </div>
+  </div>
+
+  <!-- INFO MODAL -->
+  <div class="modal-backdrop" id="infoModal">
+    <div class="modal-card">
+      <div class="modal-head"><h2>About this lab</h2><button id="btnCloseInfo" class="panel-mini-btn" aria-label="Close">✕</button></div>
+      <p>Linear Algebra Lab is a simulation-first playground. Every experiment shows the same idea three ways: a 3D picture, live numbers, and the formula behind it.</p>
+      <ul class="info-list">
+        <li><b>Drag</b> the glowing spheres to move vectors; <b>orbit</b> with the mouse, scroll to zoom.</li>
+        <li>Matrix experiments warp a second grid. Scrub <b>Transformation Flow</b> from Identity to M.</li>
+        <li><b>Shortcuts:</b> Ctrl+K / “/” search, E explorer, G grid, M music, F focus, I info, R reset camera, Space play flow.</li>
+      </ul>
+      <p class="muted">A NumPy companion for all 17 experiments is in <code>linear_algebra_lab.py</code>.</p>
+    </div>
+  </div>
+
+  <!-- LAB NOTEBOOK -->
+  <div class="modal-backdrop" id="notebookModal">
+    <div class="modal-card wide">
+      <div class="modal-head"><h2>Lab Notebook</h2><button id="btnCloseNotebook" class="panel-mini-btn" aria-label="Close">✕</button></div>
+      <div class="note-compose">
+        <input id="notebookNoteInput" class="palette-input" type="text" placeholder="Write what you noticed…" autocomplete="off">
+        <button id="btnSaveCurrentState" class="btn-action primary">Save</button>
+      </div>
+      <div id="notebookList" class="note-list"></div>
+    </div>
+  </div>
+
+  <!-- SETTINGS -->
+  <div class="modal-backdrop" id="settingsModal">
+    <div class="modal-card">
+      <div class="modal-head"><h2>Laboratory Settings</h2><button id="btnCloseSettings" class="panel-mini-btn" aria-label="Close">✕</button></div>
+      <label class="check-row"><input type="checkbox" id="chkThemeMode"> Light theme</label>
+      <label class="check-row"><input type="checkbox" id="chkReducedMotion"> Reduced motion</label>
+      <label class="check-row"><input type="checkbox" id="chkStarfield" checked> Starfield background</label>
+      <label class="check-row"><input type="checkbox" id="chkSfx" checked> Sound effects</label>
+      <button id="btnClearStorage" class="btn-action" style="margin-top:12px;">Clear saved notes &amp; preferences</button>
+    </div>
+  </div>
+
+  <!-- LANDING OVERLAY -->
+  <div class="landing-overlay" id="landingOverlay">
+    <div class="landing-card">
+      <div class="brand-icon big">LA</div>
+      <h1>Linear Algebra Lab</h1>
+      <p>Explore mathematics through space. Vectors, matrices and transformations you can drag, bend and see.</p>
+      <div class="domain-grid">
+        <button class="domain-card" data-domain="vectors"><strong>Vectors</strong><small>01–08 · Foundations</small></button>
+        <button class="domain-card" data-domain="transformations"><strong>Transformations</strong><small>09–14 · Matrices</small></button>
+        <button class="domain-card" data-domain="computation"><strong>Computation</strong><small>15–17 · Vectorization &amp; SIMD</small></button>
+      </div>
+      <button id="btnEnterLab" class="btn-action primary enter">Enter the Lab (with ambient audio)</button>
+      <p class="muted">or pick a domain above to start silently</p>
+    </div>
+  </div>
+
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+
+  <script src="app.js" defer></script>
 </body>
 </html>
