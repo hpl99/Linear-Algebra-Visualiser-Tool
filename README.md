@@ -1,92 +1,31 @@
-# Interactive Linear Algebra Laboratory
+# Linear Algebra Visualiser Tool — Enhancement Branch
 
-A visual, simulation-first laboratory designed to develop an intuitive, geometric understanding of linear algebra from absolute zero.
+This branch (enhancement/theme-audio-performance) adds the following consolidated features in one commit:
 
-> **Explore → Manipulate → Observe → Understand.**
+- Theme: Light theme variables and a persistent theme toggle (respects prefers-color-scheme and stores choice in localStorage).
+- Audio: Expanded ambient playlist (Deep Space, Orbital, Cosmic Drift, Lo-fi Study, Glass Chimes) and support for uploading a custom audio track. Added AnalyserNode plumbing and master/track gain controls.
+- Performance: Lightweight mesh pooling for reusable spheres (draggable endpoints) and an InstancedMesh helper intended for vector-cloud / particle-heavy experiments (fallback to pooled meshes if InstancedMesh not supported).
+- Accessibility: focus-visible outlines, numeric inputs next to sliders (audio volume, flow progress), and ARIA labels on key buttons.
+- UI: Added numeric inputs synced with range sliders, and improved responsive behaviour for small screens.
+- Dev: Small README and changelog entry.
 
----
+How to test quickly
 
-## 🌟 Key Features
+1. Open index.html in a browser that supports WebGL and the Web Audio API.
+2. Toggle Settings → Light Theme to switch between dark and light modes.
+3. Open Ambient (M) and try the different tracks; adjust volume with either the slider or numeric input.
+4. Upload an audio file using the Upload Track button — it will play as the custom track and be selected as 'Custom'.
+5. Verify dragging endpoints, inspect mode, and that performance remains smooth. For large vector clouds, the instancing helper will be used when enabled in experiments.
 
-1. **Simulation-First Hero Environment**
-   - 100% full-viewport 3D WebGL space with dark scientific aesthetics, starfield parallax, and cosmic dust.
-   - Smooth 3D camera controls: Left-click rotate, Right-click pan, Scroll zoom, and Camera Reset (`R`).
-   - Interactive 3D draggable vector endpoints with pulsing halos.
+Files changed in this commit
 
-2. **Two-Grid Matrix Transformation System**
-   - **Original Space Grid**: Fixed coordinate reference frame.
-   - **Transformed Space Grid**: Real-time deformed grid showcasing stretch, shear, rotation, and dimension collapse.
-   - **Transformation Flow (`Space`)**: Smooth real-time animated interpolation from Identity ($I$) to Matrix ($M$).
-   - **Basis Vector Tracking**: Prominent visual representation showing that columns of $M$ are where unit basis vectors land ($i \to M\mathbf{i}$, $j \to M\mathbf{j}$).
+- index.html — added numeric inputs and upload controls.
+- styles.css — added numeric input styles and accessibility helpers.
+- app.js — added mesh pooling, InstancedMesh helper, numeric input bindings, README references, and audio enhancements.
+- README.md — this file.
 
-3. **3-Track Space Ambient Synthesizer (`M`)**
-   - **Track 1 — Deep Space**: Calm 55Hz sub-drone with breathing resonant lowpass filter.
-   - **Track 2 — Orbital**: Rhythmic harmonic pulsation and triad pad cycling.
-   - **Track 3 — Cosmic Drift**: Ethereal celestial shimmer with high crystalline overtones.
-   - Zero external audio files required (100% procedural Web Audio API with smooth crossfading).
+Notes / Next steps
 
-4. **Experiment Explorer & Non-Linear Exploration (`E`)**
-   - Direct access to any of the 17 modules in any order.
-   - Instant search and category filtering across **Vectors**, **Transformations**, and **Computation**.
-   - URL hash deep linking (`#vector`, `#magnitude`, `#addition`, `#dot`, `#cross`, `#matrix-machine`, `#grid-transform`, `#determinant`, `#inverse`, `#simd`).
+- If you want, I can extend the InstancedMesh usage to automatically convert existing experiments 15 and 17 to use instancing by default; currently a helper function is provided and can be invoked from the experiment renderer when appropriate.
+- We can also wire more aggressive caching strategies (geometry/material caches) and add optional debug instrumentation to log draw calls and pool reuses.
 
-5. **Contextual HUD & 3D Inspect Mode**
-   - Sleek floating control drawer displaying only the controls relevant to the active experiment.
-   - **Inspect Mode (`🔍`)**: Click any vector, matrix, or basis vector in 3D to reveal instant algebraic and geometric breakdowns.
-   - **Math & Python Modal (`I`)**: Concise mathematical definitions alongside runnable NumPy snippets.
-
----
-
-## 🔬 The 17 Laboratory Experiments
-
-### Part 1: Vectors & Geometric Foundations
-* **01 — A Vector (`#vector`)**: 3D directed displacement arrow with live XYZ sliders and coordinate plane drop lines.
-* **02 — Vector Length (`#magnitude`)**: 3D Pythagorean decomposition via floor diagonal right triangle and height triangle.
-* **03 — Vector Addition (`#addition`)**: Geometric path and parallelogram addition matching component sums.
-* **04 — Vector Subtraction (`#subtraction`)**: Direct displacement arrow pointing from the tip of $\mathbf{b}$ to the tip of $\mathbf{a}$.
-* **05 — Scalar Multiplication (`#scalar`)**: Scaling magnitude, zero-crossing, and $180^\circ$ direction flip with scalar $c \in [-3, 3]$.
-* **06 — Dot Product & Projection (`#dot`)**: Directional alignment, projection shadow vector, and Acute / Orthogonal ($90^\circ, \mathbf{a}\cdot\mathbf{b}=0$) / Obtuse states.
-* **07 — Cross Product & Area (`#cross`)**: Orthogonal 3D vector $\mathbf{a}\times\mathbf{b}$ and translucent parallelogram surface area.
-* **08 — Basis Vectors (`#basis`)**: Standard unit basis $\mathbf{i}, \mathbf{j}, \mathbf{k}$ and linear combinations $\mathbf{v} = x\mathbf{i} + y\mathbf{j} + z\mathbf{k}$.
-
-### Part 2: Matrices as Space Transformations
-* **09 — Matrix as a Machine (`#matrix-machine`)**: Input $\mathbf{v} \to M \to M\mathbf{v}$ space transformation pipeline.
-* **10 — Transforming the Grid (`#grid-transform`)**: Full coordinate grid deformation under $M$ with basis vector tracking.
-* **11 — Matrix × Vector Arithmetic (`#matrix-arithmetic`)**: Row-column dot product arithmetic synced with 3D space deformation.
-* **12 — Matrix Multiplication (`#matrix-mult`)**: Non-commutativity proof ($AB \neq BA$) with rotation angle and shear sliders.
-* **13 — Determinant (`#determinant`)**: Unit area scaling factor $|\det(M)|$, orientation inversion, and 1D line collapse when $\det = 0$.
-* **14 — Matrix Inverse (`#inverse`)**: Reversing space deformation ($I \to M \to M^{-1} \to I$) with singular matrix protection.
-
-### Part 3: Computation, Vectorization & Hardware
-* **15 — Many Vectors (`#many-vectors`)**: Transforming batch vector clouds (100+ vectors) simultaneously with a single matrix.
-* **16 — What Vectorization Means (`#vectorization`)**: Eliminating interpreter loops with native compiled SIMD array multiplication.
-* **17 — SIMD CPU Lanes (`#simd`)**: 128-bit (4 lanes) and 256-bit (8 lanes) hardware registers executing parallel operations in 1 cycle.
-
----
-
-## 🚀 Getting Started
-
-### 1. Interactive 3D Web Application
-Open [`index.html`](index.html) in any modern browser, or run a local HTTP server:
-
-```bash
-python -m http.server 8080
-```
-Then navigate to `http://localhost:8080`.
-
-**Keyboard Shortcuts:**
-* `E` — Experiment Explorer
-* `G` — Two-Grid & Visual Settings menu
-* `M` — Ambient Music menu
-* `I` — Mathematical definition & NumPy snippet
-* `R` — Reset camera view to default isometric
-* `Space` — Trigger Transformation Flow ($I \to M$)
-* `Esc` — Close open modals/menus
-
----
-
-### 2. Python / NumPy Companion Script
-Run the companion script in your terminal to see the clean, readable NumPy implementation for every phase:
-
-```bash
-python linear_algebra_lab.py
